@@ -21,18 +21,15 @@ app.get("/", (req, res) => {
   res.send("Welcome to Phocus WebPage");
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+let host = process.env.HOST;
 
 mongoose
   .connect(
     "mongodb+srv://Netflix:UditNetflix@netflix.xk1hb.mongodb.net/PhocusDB?authSource=admin&replicaSet=atlas-lf2ojk-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
-  .then(() =>
-    app.listen(PORT, () =>
-      console.log(`Server running on port : http://localhost:${PORT}`)
-    )
-  )
+  .then(() => app.listen(PORT, host))
   .catch((error) => console.log(error.message));
 
 mongoose.set("useFindAndModify", false);
